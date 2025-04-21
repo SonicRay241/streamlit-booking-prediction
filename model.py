@@ -11,13 +11,13 @@ EncoderType = LabelEncoder | OneHotEncoder | OrdinalEncoder
 class Classifier(XGBClassifier):
     def __init__(self, **kwargs):
         self.encoders: dict[str, EncoderType] = {}
-        self.target_encoder: EncoderType = None
+        self.target_encoder: EncoderType | None = None
         super().__init__(**kwargs)
 
     def add_encoder(self, colname: str, encoder: EncoderType | str):
         if not isinstance(encoder, EncoderType | str):
             raise TypeError(
-                f"The object loaded must be an instance of LabelEncoder | OneHotEncoder | OrdinalEncoder | str, but got an instance of {type(encoder).__name__}"
+                f"The encoder parameter must be an instance of LabelEncoder | OneHotEncoder | OrdinalEncoder | str, but got an instance of {type(encoder).__name__}"
             )
         
         if isinstance(encoder, str):
@@ -25,7 +25,7 @@ class Classifier(XGBClassifier):
 
             if not isinstance(encoder, EncoderType):
                 raise TypeError(
-                    f"The object loaded must be an instance of LabelEncoder | OneHotEncoder | OrdinalEncoder, but got an instance of {type(encoder).__name__}"
+                    f"The file loaded must be an instance of LabelEncoder | OneHotEncoder | OrdinalEncoder, but got an instance of {type(encoder).__name__}"
                 )
         
 
@@ -34,7 +34,7 @@ class Classifier(XGBClassifier):
     def set_target_encoder(self, encoder: EncoderType | str):
         if not isinstance(encoder, EncoderType | str):
             raise TypeError(
-                f"The object loaded must be an instance of LabelEncoder | OneHotEncoder | OrdinalEncoder | str, but got an instance of {type(encoder).__name__}"
+                f"The encoder parameter must be an instance of LabelEncoder | OneHotEncoder | OrdinalEncoder | str, but got an instance of {type(encoder).__name__}"
             )
 
         if isinstance(encoder, str):
@@ -42,7 +42,7 @@ class Classifier(XGBClassifier):
 
             if not isinstance(encoder, EncoderType):
                 raise TypeError(
-                    f"The object loaded must be an instance of LabelEncoder | OneHotEncoder | OrdinalEncoder, but got an instance of {type(encoder).__name__}"
+                    f"The file loaded must be an instance of LabelEncoder | OneHotEncoder | OrdinalEncoder, but got an instance of {type(encoder).__name__}"
                 )
         
         self.target_encoder = encoder
@@ -51,16 +51,24 @@ class Classifier(XGBClassifier):
         encoder = self.encoders.get(column_name)
         if encoder is None:
             raise KeyError(
-                f"Encoder for column {column_name} is has not been added. Use the method add_encoder() to add mode feature encoder"
+                f"Encoder for column {column_name} has not been added. Use the method add_encoder() to add mode feature encoder"
             )
         
         return encoder.transform(value)
     
     def encode_target(self, value: ArrayLike):
+        if self.target_encoder is None:
+            raise ValueError(
+                f"Target encoder must be an instance of LabelEncoder | OneHotEncoder | OrdinalEncoder, but got an instance of {type(self.target_encoder).__name__}"
+            )
+
         return self.target_encoder.transform(value)
     
-    def set_params(self, params: dict[str, any]):
-        return super().set_params(**params)
+    def set_params(self, params: dict[str, any] | None = None, **kwargs):
+        if params:
+            return super().set_params(**params)
+        else:
+            return super().set_params(**kwargs)
 
     def train(self, dataframe: DataFrame, target_name: str):
         if target_name not in dataframe.columns:
