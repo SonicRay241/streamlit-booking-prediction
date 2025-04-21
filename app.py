@@ -16,6 +16,21 @@ col1, col2, _, _ = st.columns(4)
 st.divider()
 
 if "current_preset" not in st.session_state:
+    st.session_state.no_of_adults = 0
+    st.session_state.no_of_children = 0
+    st.session_state.no_of_weekend_nights = 0
+    st.session_state.no_of_week_nights = 0
+    st.session_state.meal_plan = "Not Selected"
+    st.session_state.required_parking_space = False
+    st.session_state.room_type = "Type 1"
+    st.session_state.lead_time = 0
+    st.session_state.arrival_date = datetime.date(2017,1,1)
+    st.session_state.market_segment = "Offline"
+    st.session_state.repeated_guest = False
+    st.session_state.no_of_previous_cancellations = 0
+    st.session_state.no_of_previous_booking_not_canceled = 0
+    st.session_state.avg_price_per_room = 200.0
+    st.session_state.no_of_special_requests = 0
     st.session_state.current_preset = 0
 
 with col1:
