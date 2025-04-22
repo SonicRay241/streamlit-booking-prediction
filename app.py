@@ -74,13 +74,13 @@ no_of_week_nights = st.slider("Number of Week Nights", 0, 30, 1, key="no_of_week
 meal_plan = st.selectbox("Meal Plan", options=["Not Selected", "Meal Plan 1", "Meal Plan 2", "Meal Plan 3"], key="meal_plan")
 required_parking_space = st.checkbox("Parking Space", key="required_parking_space") # Change to 0 and 1 later
 room_type = st.select_slider("Room Type", options=["Type 1", "Type 2", "Type 3", "Type 4", "Type 5", "Type 6", "Type 7"], key="room_type")
-lead_time = st.slider("Lead Time", 0, 730, 1, key="lead_time")
+lead_time = st.number_input("Lead Time", min_value=0, max_value=730, step=1, key="lead_time")
 arrival_date = st.date_input("Arrival Date", min_value=datetime.date(2017, 1, 1), max_value=datetime.date(2018, 12, 31), key="arrival_date")
 market_segment = st.selectbox("Market Segment", options=["Aviation", "Complementary", "Corporate", "Offline", "Online"], key="market_segment")
 repeated_guest = st.checkbox("Repeated Guest", key="repeated_guest") # Change to 0 and 1 later
 no_of_previous_cancellations = st.slider("Number of Previous Cancellations", 0, 15, 1, key="no_of_previous_cancellations")
 no_of_previous_bookings_not_canceled = st.slider("Number of Previous Bookings Not Cancelled", 0, 60, 1, key="no_of_previous_booking_not_canceled")
-avg_price_per_room = st.slider("Average Price per Room (in Euros)", 0.0, 600.0, 0.5, key="avg_price_per_room")
+avg_price_per_room = st.number_input("Average Price per Room (in Euros)", min_value=0.0, max_value=600.0, step=10.0, key="avg_price_per_room")
 no_of_special_requests = st.slider("Number of Special Requests", 0, 10, 1, key="no_of_special_request")
 
 if st.button("Predict", type="primary"):
