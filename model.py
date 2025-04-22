@@ -28,7 +28,6 @@ class Classifier(XGBClassifier):
                     f"The file loaded must be an instance of LabelEncoder | OneHotEncoder | OrdinalEncoder, but got an instance of {type(encoder).__name__}"
                 )
         
-
         self.encoders.update({ colname: encoder })
 
     def set_target_encoder(self, encoder: EncoderType | str):

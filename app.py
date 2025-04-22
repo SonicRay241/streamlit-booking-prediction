@@ -10,7 +10,6 @@ model = Classifier.load_model("models/oop_model.pkl")
 
 st.title("Hotel Booking Cancellation Prediction with XGBoost")
 
-
 if "current_preset" not in st.session_state:
     st.session_state.no_of_adults = 0
     st.session_state.no_of_children = 0
