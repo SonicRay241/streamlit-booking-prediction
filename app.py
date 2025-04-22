@@ -8,6 +8,14 @@ from model import Classifier
 # load model
 model = Classifier.load_model("models/oop_model.pkl")
 
+st.set_page_config(
+    page_title="Hotel Booking Prediction",
+    page_icon=":hotel:",
+    layout="centered",
+    initial_sidebar_state="expanded",
+    menu_items=None
+)
+
 st.title("Hotel Booking Cancellation Prediction with XGBoost")
 
 if "current_preset" not in st.session_state:
