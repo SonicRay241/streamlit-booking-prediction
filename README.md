@@ -52,4 +52,4 @@ Overall, the model demonstrates high predictive power, particularly in correctly
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](https://github.com/SonicRay241/streamlit-booking-prediction/blob/main/LICENSE).
